@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Cybersecurity Portfolio Design System - Dark Theme with Green/Blue/Red accents */
+
+@layer base {
+  :root {
+    /* Dark cybersecurity theme */
+    --background: 220 27% 8%;
+    --foreground: 210 20% 98%;
+
+    --card: 220 27% 10%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 220 27% 10%;
+    --popover-foreground: 210 20% 98%;
+
+    /* Cybersecurity green primary */
+    --primary: 142 76% 36%;
+    --primary-foreground: 220 27% 8%;
+    --primary-glow: 142 76% 50%;
+
+    /* Dark secondary with blue tint */
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 220 27% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    /* Blue accent for tech elements */
+    --accent: 217 91% 60%;
+    --accent-foreground: 220 27% 8%;
+
+    /* Red for security alerts/warnings */
+    --destructive: 0 76% 60%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 27% 18%;
+    --input: 220 27% 15%;
+    --ring: 142 76% 36%;
+
+    /* Custom cybersecurity colors */
+    --cyber-green: 142 76% 36%;
+    --cyber-green-glow: 142 76% 50%;
+    --cyber-blue: 217 91% 60%;
+    --cyber-red: 0 76% 60%;
+    --cyber-dark: 220 27% 5%;
+    
+    /* Gradients */
+    --gradient-cyber: linear-gradient(135deg, hsl(var(--cyber-green)) 0%, hsl(var(--cyber-blue)) 100%);
+    --gradient-glow: radial-gradient(circle, hsl(var(--cyber-green-glow) / 0.3) 0%, transparent 70%);
+    
+    /* Glowing effects */
+    --glow-cyber: 0 0 20px hsl(var(--cyber-green) / 0.5);
+    --glow-blue: 0 0 20px hsl(var(--cyber-blue) / 0.5);
+    --glow-red: 0 0 20px hsl(var(--cyber-red) / 0.5);
+    
+    /* Animations */
+    --transition-cyber: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 27% 10%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary-foreground: 220 27% 8%;
+    --sidebar-accent: 220 27% 15%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 220 27% 18%;
+    --sidebar-ring: 142 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary-glow));
+  }
+}
