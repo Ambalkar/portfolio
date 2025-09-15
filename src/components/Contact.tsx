@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Github, Linkedin, Send, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import * as emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +13,15 @@ const Contact = () => {
     email: "", 
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // EmailJS configuration
+  const EMAILJS_SERVICE_ID = 'service_44aonun';
+  const EMAILJS_TEMPLATE_ID = 'template_a68homq';
+  const EMAILJS_PUBLIC_KEY = 'rRJ1m82MPu3c2h5bd';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Simple form validation
@@ -27,20 +34,48 @@ const Contact = () => {
       return;
     }
 
-    // Create mailto link with form data
-    const subject = `Contact from ${formData.name}`;
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-    const mailtoLink = `mailto:devendraambalkar11@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Success",
-      description: "Email client opened. Your message has been prepared.",
-    });
+    setIsSubmitting(true);
 
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
+    try {
+      // Initialize EmailJS
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'devendraambalkar11@gmail.com'
+      };
+
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
+
+      if (response.status === 200) {
+        toast({
+          title: "Success!",
+          description: "Your message has been sent successfully. I'll get back to you soon!",
+        });
+
+        // Reset form
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact me directly.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -52,25 +87,32 @@ const Contact = () => {
       color: "text-primary"
     },
     {
+      icon: Phone,
+      title: "Phone",
+      value: "+91 7249640336",
+      link: "tel:+917249640336",
+      color: "text-accent"
+    },
+    {
       icon: MapPin,
       title: "Location", 
       value: "Wardha, Maharashtra, India",
       link: null,
-      color: "text-accent"
+      color: "text-foreground"
     },
     {
       icon: Github,
       title: "GitHub",
       value: "github.com/Ambalkar",
       link: "https://github.com/Ambalkar",
-      color: "text-foreground"
+      color: "text-cyber-blue"
     },
     {
       icon: Linkedin,
       title: "LinkedIn",
       value: "linkedin.com/in/devendra-ambalkar-67ba671b3",
       link: "https://www.linkedin.com/in/devendra-ambalkar-67ba671b3",
-      color: "text-cyber-blue"
+      color: "text-primary"
     }
   ];
 
@@ -212,15 +254,16 @@ const Contact = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow hover:shadow-glow-blue transition-all group"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow hover:shadow-glow-blue transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Send Message
+                  <Send className={`w-4 h-4 mr-2 ${isSubmitting ? 'animate-spin' : 'group-hover:translate-x-1'} transition-transform`} />
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
 
               <p className="text-xs text-muted-foreground mt-4 text-center">
-                * Required fields. Your message will open in your default email client.
+                * Required fields. Your message will be sent directly to my email.
               </p>
             </Card>
           </div>
@@ -233,17 +276,30 @@ const Contact = () => {
             <p className="text-muted-foreground mb-4">
               For urgent cybersecurity matters or quick questions
             </p>
-            <Button
-              asChild
-              size="sm"
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary/10"
-            >
-              <a href="mailto:devendraambalkar11@gmail.com">
-                <Mail className="w-4 h-4 mr-2" />
-                Email Directly
-              </a>
-            </Button>
+            <div className="flex gap-3 justify-center">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary/10"
+              >
+                <a href="mailto:devendraambalkar11@gmail.com">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Email Directly
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="border-accent text-accent hover:bg-accent/10"
+              >
+                <a href="tel:+917249640336">
+                  <Phone className="w-4 h-4 mr-2" />
+                  Call Now
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

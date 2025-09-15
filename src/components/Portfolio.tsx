@@ -48,7 +48,7 @@ const Portfolio = () => {
         { src: webAccessImages[1], alt: "VLAN configuration and security settings" },
         { src: webAccessImages[2], alt: "Access control implementation" }
       ],
-      github: "https://github.com/Ambalkar",
+      github: "https://github.com/Ambalkar/CISCO-Virtual-Internship-Program-in-Cybersecurity.git",
       linkedin: "https://www.linkedin.com/in/devendra-ambalkar-67ba671b3",
       color: "text-primary",
       borderColor: "border-primary/20 hover:border-primary/60",
@@ -70,7 +70,7 @@ const Portfolio = () => {
         { src: intrusionImages[1], alt: "Machine learning model training interface" },
         { src: intrusionImages[2], alt: "Real-time monitoring dashboard" }
       ],
-      github: "https://github.com/Ambalkar",
+      github: "https://github.com/Ambalkar/HIDS",
       linkedin: "https://www.linkedin.com/in/devendra-ambalkar-67ba671b3",
       color: "text-accent", 
       borderColor: "border-accent/20 hover:border-accent/60",
@@ -94,7 +94,7 @@ const Portfolio = () => {
         { src: adLabImages[3], alt: "Active Directory server login" },
         { src: adLabImages[4], alt: "User login logs in Splunk dashboard" }
       ],
-      github: "https://github.com/Ambalkar",
+      github: "https://github.com/Ambalkar/Active-Directory-and-SOC-analysis-home-lab.git",
       linkedin: "https://www.linkedin.com/in/devendra-ambalkar-67ba671b3",
       color: "text-destructive",
       borderColor: "border-destructive/20 hover:border-destructive/60", 
@@ -122,147 +122,136 @@ const Portfolio = () => {
               className={`p-8 bg-card/50 backdrop-blur-sm ${project.borderColor} ${project.glowColor} transition-all duration-500 animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="grid lg:grid-cols-3 gap-8 items-start">
-                {/* Project Icon & Title */}
-                <div className="lg:col-span-1">
-                  <div className="flex items-center mb-4">
-                    <div className={`p-4 rounded-lg bg-muted/30 mr-4`}>
-                      <project.icon className={`w-8 h-8 ${project.color}`} />
-                    </div>
+              <div className="space-y-6">
+                {/* Project Header */}
+                <div className="flex items-center mb-6">
+                  <div className={`p-4 rounded-lg bg-muted/30 mr-4`}>
+                    <project.icon className={`w-8 h-8 ${project.color}`} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
-                  
-                  {/* Project Images */}
-                  {project.images && project.images.length > 0 && (
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground mb-3">
-                        Screenshots
-                      </h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {project.images.slice(0, 4).map((image, imageIndex) => (
-                          <Dialog key={imageIndex}>
-                            <DialogTrigger asChild>
-                              <div className="relative group cursor-pointer">
-                                <img
-                                  src={image.src}
-                                  alt={image.alt}
-                                  className="w-full h-24 object-cover rounded-lg border border-border hover:border-primary/50 transition-all group-hover:scale-105"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.style.display = 'none';
-                                    target.parentElement!.innerHTML = `
-                                      <div class="w-full h-24 bg-muted/30 rounded-lg border border-border flex items-center justify-center">
-                                        <span class="text-xs text-muted-foreground">Image not available</span>
-                                      </div>
-                                    `;
-                                  }}
-                                  loading="lazy"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-lg flex items-center justify-center">
-                                  <ImageIcon className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </div>
-                              </div>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto">
-                              <div className="relative">
-                                <img
-                                  src={image.src}
-                                  alt={image.alt}
-                                  className="w-full h-auto rounded-lg shadow-lg"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.parentElement!.innerHTML = `
-                                      <div class="w-full h-64 bg-muted/30 rounded-lg border border-border flex items-center justify-center">
-                                        <span class="text-muted-foreground">Image could not be loaded</span>
-                                      </div>
-                                    `;
-                                  }}
-                                />
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        ))}
-                        {project.images.length > 4 && (
-                          <div className="relative group cursor-pointer">
-                            <div className="w-full h-24 bg-muted/30 rounded-lg border border-border flex items-center justify-center">
-                              <span className="text-xs text-muted-foreground">+{project.images.length - 4} more</span>
-                            </div>
-                          </div>
-                        )}
+                  <h3 className="text-2xl font-bold">{project.title}</h3>
+                </div>
+
+                {/* Project Description */}
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Key Features */}
+                <div className="mb-6">
+                  <h4 className="font-semibold mb-3 text-foreground">Key Features:</h4>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {project.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center">
+                        <div className={`w-2 h-2 rounded-full ${project.color.replace('text-', 'bg-')} mr-3`} />
+                        <span className="text-foreground text-sm">{feature}</span>
                       </div>
-                    </div>
-                  )}
-                  
-                  {/* Technologies */}
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
-                      Technologies
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className={`px-3 py-1 text-xs rounded-full bg-muted/30 ${project.color} border ${project.borderColor.split(' ')[0]}`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Project Details */}
-                <div className="lg:col-span-2">
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Key Features */}
+                {/* Project Screenshots - Horizontal Layout */}
+                {project.images && project.images.length > 0 && (
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-3 text-foreground">Key Features:</h4>
-                    <div className="grid md:grid-cols-2 gap-3">
-                      {project.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center">
-                          <div className={`w-2 h-2 rounded-full ${project.color.replace('text-', 'bg-')} mr-3`} />
-                          <span className="text-foreground text-sm">{feature}</span>
-                        </div>
+                    <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground mb-4">
+                      Screenshots
+                    </h4>
+                    <div className="flex gap-4 overflow-x-auto pb-2">
+                      {project.images.map((image, imageIndex) => (
+                        <Dialog key={imageIndex}>
+                          <DialogTrigger asChild>
+                            <div className="relative group cursor-pointer flex-shrink-0">
+                              <img
+                                src={image.src}
+                                alt={image.alt}
+                                className="w-48 h-32 object-cover rounded-lg border border-border hover:border-primary/50 transition-all group-hover:scale-105"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  target.parentElement!.innerHTML = `
+                                    <div class="w-48 h-32 bg-muted/30 rounded-lg border border-border flex items-center justify-center">
+                                      <span class="text-xs text-muted-foreground">Image not available</span>
+                                    </div>
+                                  `;
+                                }}
+                                loading="lazy"
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-lg flex items-center justify-center">
+                                <ImageIcon className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                              </div>
+                            </div>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto">
+                            <div className="relative">
+                              <img
+                                src={image.src}
+                                alt={image.alt}
+                                className="w-full h-auto rounded-lg shadow-lg"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.parentElement!.innerHTML = `
+                                    <div class="w-full h-64 bg-muted/30 rounded-lg border border-border flex items-center justify-center">
+                                      <span class="text-muted-foreground">Image could not be loaded</span>
+                                    </div>
+                                  `;
+                                }}
+                              />
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       ))}
                     </div>
                   </div>
+                )}
 
-                  {/* Action Buttons */}
-                  <div className="flex gap-4">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className={`${project.borderColor.split(' ')[0]} ${project.color} hover:bg-muted/50`}
-                    >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center"
+                {/* Technologies */}
+                <div className="mb-6">
+                  <h4 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground mb-3">
+                    Technologies
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className={`px-3 py-1 text-xs rounded-full bg-muted/30 ${project.color} border ${project.borderColor.split(' ')[0]}`}
                       >
-                        <Github className="w-4 h-4 mr-2" />
-                        View on GitHub
-                      </a>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className={`${project.borderColor.split(' ')[0]} ${project.color} hover:bg-muted/50`}
-                    >
-                      <a
-                        href={project.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Learn More
-                      </a>
-                    </Button>
+                        {tech}
+                      </span>
+                    ))}
                   </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-4">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className={`${project.borderColor.split(' ')[0]} ${project.color} hover:bg-muted/50`}
+                  >
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center"
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      View on GitHub
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className={`${project.borderColor.split(' ')[0]} ${project.color} hover:bg-muted/50`}
+                  >
+                    <a
+                      href={project.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Learn More
+                    </a>
+                  </Button>
                 </div>
               </div>
             </Card>
