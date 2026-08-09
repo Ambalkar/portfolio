@@ -299,8 +299,11 @@ function debounce(func, wait) {
 
 function renderIcons() {
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        window.lucide.createIcons();
-        return;
+        try {
+            window.lucide.createIcons();
+        } catch (error) {
+            console.warn('Lucide icon rendering failed, using fallback icons.', error);
+        }
     }
 
     document.querySelectorAll('[data-lucide]').forEach(function (el) {
